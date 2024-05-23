@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupplyReport {
+public class ReportDto {
+    private Long supplyId;
     private String supplierName;
     private String productName;
     private String productType;
-    private Double totalQuantity;
+    private Double totalAmount;
     private Double totalCost;
 }

@@ -23,5 +23,5 @@ public class SupplyDto {
     @NotBlank
     private Timestamp supplyDate;
     @NotEmpty
-    private List<ProductSupply> products;
+    private List<ProductSupplyDto> products;
 }
