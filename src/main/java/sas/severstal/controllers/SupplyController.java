@@ -1,5 +1,6 @@
 package sas.severstal.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,15 @@ public class SupplyController {
     public List<ReportDto> getSuppliesBetweenDates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
         return supplyService.getSuppliesBetweenDates(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
+    }
+
+    @CrossOrigin
+    @GetMapping("/report/csv")
+    @ResponseStatus(HttpStatus.OK)
+    public void getSuppliesBetweenDatesCSV(HttpServletResponse response,
+                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+         supplyService.getSuppliesBetweenDatesCSV(response,Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
     }
 
 }

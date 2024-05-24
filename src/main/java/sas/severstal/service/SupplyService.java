@@ -1,5 +1,7 @@
 package sas.severstal.service;
 
+import com.opencsv.CSVWriter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -15,6 +17,9 @@ import sas.severstal.repository.ProductRepository;
 import sas.severstal.repository.SupplierRepository;
 import sas.severstal.repository.SupplyRepository;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,9 +76,11 @@ public class SupplyService {
                 if (reportMap.containsKey(key)) {
                     ReportDto reportDto = reportMap.get(key);
                     reportDto.setTotalAmount(reportDto.getTotalAmount() + productSupply.getAmount());
-                    reportDto.setTotalCost(reportDto.getTotalCost() + (productSupply.getProduct().getPrice() * productSupply.getAmount()));
+                    reportDto.setTotalCost(reportDto.getTotalCost() +
+                            (productSupply.getProduct().getPrice() * productSupply.getAmount()));
                 } else {
                     ReportDto reportDto = new ReportDto(
+                            supply.getSupplyDate(),
                             supply.getId(),
                             supply.getSupplier().getName(),
                             productSupply.getProduct().getName(),
@@ -87,5 +94,36 @@ public class SupplyService {
         }
         return new ArrayList<>(reportMap.values());
     }
+
+    public void getSuppliesBetweenDatesCSV(HttpServletResponse response, Timestamp start, Timestamp end) {
+        try {
+            List<ReportDto> reports = getSuppliesBetweenDates(start, end);
+
+            response.setContentType("text/csv; charset=utf-8");
+            response.setHeader("Content-Disposition", "attachment; filename=otchet_" + start + "_" + end + ".csv");
+
+            CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8));
+
+            String[] headers = {"Date", "ID Supply", "Supplier", "Product", "Product Type", "Total Amount", "Total cost"};
+            writer.writeNext(headers);
+
+            for (ReportDto report : reports) {
+                String[] data = {
+                        String.valueOf(report.getDate()),
+                        String.valueOf(report.getSupplyId()),
+                        report.getSupplierName(),
+                        report.getProductName(),
+                        report.getProductName(),
+                        String.valueOf(report.getTotalAmount()),
+                        String.valueOf(report.getTotalCost())
+                };
+                writer.writeNext(data);
+            }
+
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+}
 

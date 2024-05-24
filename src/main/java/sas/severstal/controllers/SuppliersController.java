@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import sas.severstal.dto.ProductDto;
 import sas.severstal.dto.SupplierDto;
-import sas.severstal.model.Supplier;
-import sas.severstal.service.ProductService;
 import sas.severstal.service.SuppliersService;
 
 import java.util.List;
