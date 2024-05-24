@@ -5,13 +5,14 @@
 + Maven
 + Hibernate
 + PostgreSQL
++ JS/HTML/CSS
++ Docker
 
 Database diagramm
 
-![DB diagram](https://github.com/AndreyStaroverov/Notes/blob/main/Database.png)
+![DB diagram](https://github.com/AndreyStaroverov/Severstal2/blob/main/db.jpg)
 
-HTML+JS+CSS. Был сделан простейший визуальный интерфейс, где мы выбираем ID пользователя, получаем заметки 
-(Всегда есть минимум 1), затем можем обновлять, удалять, создавать новые.
+HTML+JS+CSS. Был сделан простейший визуальный интерфейс
 
 ![Visual](https://github.com/AndreyStaroverov/Notes/blob/main/Visual.png)
 
