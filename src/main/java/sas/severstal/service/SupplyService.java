@@ -73,18 +73,18 @@ public class SupplyService {
                     reportDto.setTotalAmount(reportDto.getTotalAmount() + productSupply.getAmount());
                     reportDto.setTotalCost(reportDto.getTotalCost() + (productSupply.getProduct().getPrice() * productSupply.getAmount()));
                 } else {
-                    ReportDto reportDto = new ReportDto();
-                    reportDto.setSupplyId(supply.getId());
-                    reportDto.setSupplierName(supply.getSupplier().getName());
-                    reportDto.setProductName(productSupply.getProduct().getName());
-                    reportDto.setProductType(productSupply.getProduct().getType());
-                    reportDto.setTotalAmount(productSupply.getAmount());
-                    reportDto.setTotalCost(productSupply.getProduct().getPrice() * productSupply.getAmount());
+                    ReportDto reportDto = new ReportDto(
+                            supply.getId(),
+                            supply.getSupplier().getName(),
+                            productSupply.getProduct().getName(),
+                            productSupply.getProduct().getType(),
+                            productSupply.getAmount(),
+                            (productSupply.getProduct().getPrice() * productSupply.getAmount())
+                    );
                     reportMap.put(key, reportDto);
                 }
             }
         }
-
         return new ArrayList<>(reportMap.values());
     }
     }

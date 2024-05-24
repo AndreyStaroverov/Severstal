@@ -3,7 +3,6 @@ package sas.severstal.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sas.severstal.model.ProductSupply;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
