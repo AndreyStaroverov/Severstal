@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  main-service:
+    build: server/.
+    container_name: main-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sas-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://sas-db:5432/sas
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=norman123
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+
+  sas-db:
+    image: postgres:15.3-alpine3.18
+    container_name: sas-db
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=sas
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=norman123
